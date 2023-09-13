@@ -13,9 +13,9 @@ pipeline {
 
         stage('Run Script') {
             steps {
-                // Выполняем скрипт check_service.sh -n ntp
+                // Выполняем скрипт check_service.sh -n mongod
                 script {
-                    sh './check_service.sh -n ntpd'
+                    sh './check_service.sh -n mongod'
                 }
             }
         }
