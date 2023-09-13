@@ -15,8 +15,11 @@ function HELP {
     echo "Usage: $0 [options]"
     echo "Options:"
     echo "  -h     Show this help message."
-    echo "  -n     Specify the name of the service to check."
     echo "  -v     Show version script"
+    echo "  -n     Specify the name of the service to check. For example: $0 -n ntp"
+    echo "         Possible answers:"
+    echo "         - Service is running."
+    echo "         - Service is not running."
     exit $STATUS_UNKNOWN
 }
 
@@ -28,24 +31,10 @@ function show_version {
 
 # Function to check if a service is running. Use systemctl
 function check_service {
-    systemctl is-active --quiet "$service_name"
+    systemctl is-active "$service_name"
 
-    # Check status
     if [ $? -eq 0 ]; then
-        # Service is running
-        echo "$service_name service is running."
         exit $STATUS_OK
-    else
-        # Check if the service exists but is not active
-        if systemctl is-enabled --quiet "$service_name"; then
-            # Service is not running, but it exists
-            echo "$service_name service is not running."
-            exit $STATUS_CRITICAL
-        else
-            # Service does not exist
-            echo "Unit $service_name could not be found."
-            exit $STATUS_UNKNOWN
-        fi
     fi
 }
 
@@ -75,3 +64,6 @@ fi
 
 # Call the function
 check_service
+
+# If check_service function doesn't exit
+exit $STATUS_CRITICAL
