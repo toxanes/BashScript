@@ -13,9 +13,9 @@ pipeline {
 
         stage('Run Script') {
             steps {
-                // Выполняем скрипт check_service.sh -n mongod
+                // Выполняем скрипт check_service.sh -n postgresql
                 script {
-                    sh './check_service.sh -n mongod'
+                    sh './check_service.sh -n postgresql'
                 }
             }
         }
