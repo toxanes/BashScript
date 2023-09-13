@@ -15,7 +15,7 @@ pipeline {
             steps {
                 // Выполняем скрипт check_service.sh -n ntp
                 script {
-                    sh './check_service.sh -n ntp'
+                    sh './check_service.sh -n ntpd'
                 }
             }
         }
