@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Клонируем репозиторий из GitHub
+                script {
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/toxanes/BashScript']]])
+                }
+            }
+        }
+
+        stage('Run Script') {
+            steps {
+                // Выполняем скрипт check_service.sh -n ntp
+                script {
+                    sh './check_service.sh -n ntp'
+                }
+            }
+        }
+    }
+}
